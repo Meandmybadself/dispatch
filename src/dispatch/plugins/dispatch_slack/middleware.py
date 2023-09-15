@@ -196,7 +196,15 @@ def restricted_command_middleware(
 def is_bot(request: BoltRequest) -> bool:
     body = request.body
     user = body.get("event", {}).get("user")
-    if user == "USLACKBOT":
+
+    authorizations = body.get("authorizations")
+
+    if authorizations:
+        for auth in authorizations:
+            if auth.get("is_bot") == True:
+                return True
+
+    if user == "USLACKBOT" :
         return True
 
     auth_result = request.context.authorize_result
