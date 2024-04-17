@@ -204,6 +204,8 @@ def restricted_command_middleware(
 # https://github.com/slackapi/bolt-python/blob/main/slack_bolt/middleware/ignoring_self_events/ignoring_self_events.py#L37
 def is_bot(request: BoltRequest) -> bool:
     body = request.body
+    import pprint
+    pprint.pprint(body)
     user = body.get("event", {}).get("user")
     if user == "USLACKBOT":
         return True
